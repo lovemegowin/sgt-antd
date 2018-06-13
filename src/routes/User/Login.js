@@ -10,7 +10,7 @@ const { Meta } = Card;
 
 @connect(({ login, loading }) => ({
   login,
-  submitting: loading.effects['login/login'],
+  loading: loading.effects['login/loginNew'],
 }))
 
 export default class LoginPage extends Component {
@@ -45,7 +45,8 @@ export default class LoginPage extends Component {
   };
 
   render() {
-    const { login, submitting } = this.props;
+    const { login, loading } = this.props;
+    console.log(this.props)
     const { type } = this.state;
     const IconText = ({ type, text }) => (
       <span>
@@ -57,9 +58,10 @@ export default class LoginPage extends Component {
     return (
       <div className={styles.main}>
         <Card
+          loading={loading}
           hoverable
           style={{ width: 368 }}
-          cover={<img alt="example" src={login.qrImg} />}
+          cover={login.qrImg&&<img src={login.qrImg} />}
         >
           <Meta
             title="扫描二维码登陆"
@@ -73,6 +75,7 @@ export default class LoginPage extends Component {
                 },
                 pageSize: 3,
               }}
+              loading={loading}
               dataSource = {login.empList}
               footer={<div><b>ant design</b> footer part</div>}
               renderItem={item => (

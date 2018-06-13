@@ -98,6 +98,7 @@ export default {
       };
     },
     scanSuccess(state,{payload}){
+      localStorage.agentEmpList = JSON.stringify(payload.response.empList);
       return{
         ...state,
         status:payload.code,
