@@ -1,4 +1,3 @@
-
 export default {
   namespace: 'login',
 
@@ -6,11 +5,7 @@ export default {
     status: undefined,
   },
 
-  effects: {
+  effects: {},
 
-  },
-
-  reducers: {
-
-  },
+  reducers: {},
 };
