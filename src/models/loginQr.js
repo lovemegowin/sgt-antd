@@ -1,5 +1,5 @@
 import { routerRedux } from 'dva/router';
-import {fakeAccountLogin, getAuth} from '../services/api';
+import { fakeAccountLogin, getAuth } from '../services/api';
 import { setAuthority } from '../utils/authority';
 import { reloadAuthorized } from '../utils/Authorized';
 

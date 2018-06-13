@@ -1,5 +1,5 @@
 import { routerRedux } from 'dva/router';
-import {checkScanStatus, fakeAccountLogin, getAuth} from '../services/api';
+import { checkScanStatus, fakeAccountLogin, getAuth } from '../services/api';
 import { setAuthority } from '../utils/authority';
 import { reloadAuthorized } from '../utils/Authorized';
 
@@ -51,28 +51,27 @@ export default {
       };
       let responseScan = {};
       let count = 0;
-      let tag = true ;
+      let tag = true;
       const response = yield call(getAuth, payload);
       yield put({
         type: 'getQrImg',
         payload: response,
       });
-      while(tag){
+      while (tag) {
         yield call(delay, 2000);
         responseScan = yield call(checkScanStatus, response.qrCodeTicket);
         count++;
-        if(responseScan.code==='0'){
+        if (responseScan.code === '0') {
           setAuthority(responseScan.response.access_token);
           // yield put(routerRedux.push('/dashboard/test'));
           yield put({
-            type:'scanSuccess',
-            payload:responseScan,
+            type: 'scanSuccess',
+            payload: responseScan,
           });
-          return tag = false;
+          return (tag = false);
         }
-        if(count>=5){
-
-          return tag = false;
+        if (count >= 5) {
+          return (tag = false);
         }
       }
     },
@@ -93,17 +92,17 @@ export default {
         ...state,
         status: payload.status,
         type: payload.type,
-        qrImg:payload.qrImg,
-        qrTicket:payload.qrCodeTicket
+        qrImg: payload.qrImg,
+        qrTicket: payload.qrCodeTicket,
       };
     },
-    scanSuccess(state,{payload}){
+    scanSuccess(state, { payload }) {
       localStorage.agentEmpList = JSON.stringify(payload.response.empList);
-      return{
+      return {
         ...state,
-        status:payload.code,
-        empList:payload.response.empList,
-      }
-    }
+        status: payload.code,
+        empList: payload.response.empList,
+      };
+    },
   },
 };

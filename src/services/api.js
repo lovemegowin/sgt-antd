@@ -88,6 +88,6 @@ export async function getAuth() {
 export async function checkScanStatus(params) {
   return request('/mp/employee/scan/', {
     method: 'GET',
-    body:params
+    body: params,
   });
 }

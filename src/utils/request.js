@@ -55,7 +55,7 @@ export default function request(url, options) {
       newOptions.headers = {
         Accept: 'application/json',
         'Content-Type': 'application/json; charset=utf-8',
-        Authorization:auth,
+        Authorization: auth,
         ...newOptions.headers,
       };
       newOptions.body = JSON.stringify(newOptions.body);
@@ -63,23 +63,23 @@ export default function request(url, options) {
       // newOptions.body is FormData
       newOptions.headers = {
         Accept: 'application/json',
-        Authorization:auth,
+        Authorization: auth,
         ...newOptions.headers,
       };
     }
-  }else if (newOptions.method === 'GET'){
+  } else if (newOptions.method === 'GET') {
     newOptions.headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json; charset=utf-8',
-      'channelId':8,
-      Authorization:auth,
-      ...newOptions.headers
+      channelId: 8,
+      Authorization: auth,
+      ...newOptions.headers,
     };
     url = url + newOptions.body;
     delete newOptions.body;
-    return fetch(url,newOptions)
+    return fetch(url, newOptions)
       .then(checkStatus)
-      .then( response =>{
+      .then(response => {
         return response.json();
       })
       .catch(e => {
