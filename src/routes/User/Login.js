@@ -33,6 +33,13 @@ export default class LoginPage extends Component {
     });
   };
 
+  choseMerchant = (token)=>{
+    this.props.dispatch({
+      type: 'login/choseMerchant',
+      payload:token
+    });
+  }
+
   changeAutoLogin = e => {
     this.setState({
       autoLogin: e.target.checked,
@@ -66,14 +73,7 @@ export default class LoginPage extends Component {
         </Card>
         {login.status === '0' && (
           <List
-            itemLayout="vertical"
             size="large"
-            pagination={{
-              onChange: page => {
-                console.log(page);
-              },
-              pageSize: 3,
-            }}
             loading={loading}
             dataSource={login.empList}
             footer={
@@ -82,21 +82,12 @@ export default class LoginPage extends Component {
               </div>
             }
             renderItem={item => (
-              <List.Item
-                key={item.empId}
-                actions={[
-                  <IconText type="star-o" text="156" />,
-                  <IconText type="like-o" text="156" />,
-                  <IconText type="message" text="2" />,
-                ]}
-                extra={<img width={272} alt="logo" src={item.headImgUrl} />}
-              >
+              <List.Item key={item.empId}>
                 <List.Item.Meta
                   avatar={<Avatar src={item.headImgUrl} />}
-                  title={<a href={item.access_token}>{item.access_token}</a>}
                   description={item.mpName}
                 />
-                {item.realname}
+                <a onClick={()=>this.choseMerchant(item.access_token)}>{item.realname}</a>
               </List.Item>
             )}
           />

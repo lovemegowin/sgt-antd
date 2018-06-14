@@ -1,5 +1,5 @@
 import { routerRedux } from 'dva/router';
-import { checkScanStatus, fakeAccountLogin, getAuth } from '../services/api';
+import { checkScanStatus, fakeAccountLogin, getAuth, loginNotify, getMenu, getUserInfo } from '../services/api';
 import { setAuthority } from '../utils/authority';
 import { reloadAuthorized } from '../utils/Authorized';
 
@@ -74,6 +74,15 @@ export default {
           return (tag = false);
         }
       }
+    },
+    *choseMerchant({ payload }, { call, put }) {
+      setAuthority('Bearer '+payload);
+      yield call(loginNotify);
+      localStorage.menu = yield call(getMenu);
+      localStorage.userInfo = yield call(getUserInfo);
+      // Login successfully
+      yield put(routerRedux.push('/dashboard/test'));
+
     },
   },
 

@@ -138,6 +138,11 @@ const proxy = {
   },
   'GET /test': getFakeChartData
 };
+// export default {
+//   'GET /*': 'https://sgt.pujiang.cn/',
+//   'POST /*': 'https://sgt.pujiang.cn/',
+// };
+
 export default {
   'GET /*': 'https://siguateng.cn/',
   'POST /*': 'https://siguateng.cn/',
