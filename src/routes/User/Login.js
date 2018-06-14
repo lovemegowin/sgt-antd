@@ -16,9 +16,6 @@ export default class LoginPage extends Component {
   state = {
     type: 'account',
     autoLogin: true,
-    qrImg: '',
-    qrTicket: '',
-    status: '',
   };
 
   componentDidMount() {
@@ -33,12 +30,12 @@ export default class LoginPage extends Component {
     });
   };
 
-  choseMerchant = (token)=>{
+  choseMerchant = token => {
     this.props.dispatch({
       type: 'login/choseMerchant',
-      payload:token
+      payload: token,
     });
-  }
+  };
 
   changeAutoLogin = e => {
     this.setState({
@@ -53,7 +50,13 @@ export default class LoginPage extends Component {
   render() {
     const { login, loading } = this.props;
     console.log(this.props);
+    console.log(this.state);
     const { type } = this.state;
+    const MaskLayer = () => (
+      <div className="mask">
+        <a onClick={() => this.checkScanStatusFuc(login.qrTicket)}>刷新</a>
+      </div>
+    );
     const IconText = ({ type, text }) => (
       <span>
         <Icon type={type} style={{ marginRight: 8 }} />
@@ -87,14 +90,12 @@ export default class LoginPage extends Component {
                   avatar={<Avatar src={item.headImgUrl} />}
                   description={item.mpName}
                 />
-                <a onClick={()=>this.choseMerchant(item.access_token)}>{item.realname}</a>
+                <a onClick={() => this.choseMerchant(item.access_token)}>{item.realname}</a>
               </List.Item>
             )}
           />
         )}
-        <Button type="primary" onClick={() => this.checkScanStatusFuc(login.qrTicket)}>
-          check
-        </Button>
+        {login.showMask === true && <MaskLayer />}
       </div>
     );
   }

@@ -144,7 +144,7 @@ const proxy = {
 // };
 
 export default {
-  'GET /*': 'https://siguateng.cn/',
-  'POST /*': 'https://siguateng.cn/',
+  'GET /*': 'https://sgt.pujiang.cn/',
+  'POST /*': 'https://sgt.pujiang.cn/',
 };
 // export default (noProxy ? {} : delay(proxy, 500));
