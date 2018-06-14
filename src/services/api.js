@@ -91,20 +91,20 @@ export async function checkScanStatus(params) {
     body: params,
   });
 }
- export async function loginNotify() {
-   return request('/mp/employee/login/notify', {
-     method: 'POST'
-   });
- }
- export async function getMenu() {
-   return request('/mp/menu/nav', {
-     method: 'GET',
-     body:''
-   });
- }
+export async function loginNotify() {
+  return request('/mp/employee/login/notify', {
+    method: 'POST',
+  });
+}
+export async function getMenu() {
+  return request('/mp/menu/nav', {
+    method: 'GET',
+    body: '',
+  });
+}
 export async function getUserInfo() {
   return request('/mp/user/info', {
     method: 'GET',
-    body:''
+    body: '',
   });
 }

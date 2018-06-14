@@ -1,5 +1,12 @@
 import { routerRedux } from 'dva/router';
-import { checkScanStatus, fakeAccountLogin, getAuth, loginNotify, getMenu, getUserInfo } from '../services/api';
+import {
+  checkScanStatus,
+  fakeAccountLogin,
+  getAuth,
+  loginNotify,
+  getMenu,
+  getUserInfo,
+} from '../services/api';
 import { setAuthority } from '../utils/authority';
 import { reloadAuthorized } from '../utils/Authorized';
 
@@ -71,18 +78,23 @@ export default {
           return (tag = false);
         }
         if (count >= 5) {
+          if (responseScan.code !== '0') {
+            yield put({
+              type: 'scanError',
+              payload: responseScan,
+            });
+          }
           return (tag = false);
         }
       }
     },
     *choseMerchant({ payload }, { call, put }) {
-      setAuthority('Bearer '+payload);
+      setAuthority('Bearer ' + payload);
       yield call(loginNotify);
       localStorage.menu = yield call(getMenu);
       localStorage.userInfo = yield call(getUserInfo);
       // Login successfully
       yield put(routerRedux.push('/dashboard/test'));
-
     },
   },
 
@@ -103,6 +115,7 @@ export default {
         type: payload.type,
         qrImg: payload.qrImg,
         qrTicket: payload.qrCodeTicket,
+        showMask: false,
       };
     },
     scanSuccess(state, { payload }) {
@@ -111,6 +124,14 @@ export default {
         ...state,
         status: payload.code,
         empList: payload.response.empList,
+        showMask: false,
+      };
+    },
+    scanError(state, { payload }) {
+      return {
+        ...state,
+        status: payload.code,
+        showMask: true,
       };
     },
   },
