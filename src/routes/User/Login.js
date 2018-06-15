@@ -13,6 +13,7 @@ const { Meta } = Card;
   loading: loading.effects['login/loginNew'],
 }))
 export default class LoginPage extends Component {
+
   state = {
     type: 'account',
     autoLogin: true,
@@ -51,10 +52,10 @@ export default class LoginPage extends Component {
     const { login, loading } = this.props;
     console.log(this.props);
     console.log(this.state);
-    const { type } = this.state;
+    const { type ,showMask} = this.state;
     const MaskLayer = () => (
       <div className="mask">
-        <a onClick={() => this.checkScanStatusFuc(login.qrTicket)}>刷新</a>
+        <a onClick={() => this.checkScanStatusFuc(login.qrCodeTicket)}>刷新</a>
       </div>
     );
     const IconText = ({ type, text }) => (

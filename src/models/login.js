@@ -15,6 +15,7 @@ export default {
 
   state: {
     status: undefined,
+    showMask:false
   },
 
   effects: {
@@ -81,7 +82,7 @@ export default {
           if (responseScan.code !== '0') {
             yield put({
               type: 'scanError',
-              payload: responseScan,
+              payload: {showMask:true},
             });
           }
           return (tag = false);
@@ -109,13 +110,10 @@ export default {
     },
     getQrImg(state, { payload }) {
       payload.qrImg = `https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${payload.qrCodeTicket}`;
+      payload.showMask = false ;
       return {
         ...state,
-        status: payload.status,
-        type: payload.type,
-        qrImg: payload.qrImg,
-        qrTicket: payload.qrCodeTicket,
-        showMask: false,
+        ...payload,
       };
     },
     scanSuccess(state, { payload }) {
@@ -124,14 +122,12 @@ export default {
         ...state,
         status: payload.code,
         empList: payload.response.empList,
-        showMask: false,
       };
     },
     scanError(state, { payload }) {
       return {
         ...state,
-        status: payload.code,
-        showMask: true,
+        ...payload
       };
     },
   },
