@@ -52,7 +52,6 @@ export default function request(url, options) {
 
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
     if (!(newOptions.body instanceof FormData)) {
-      debugger
       newOptions.headers = {
         Accept: 'application/json',
         'Content-Type': 'application/json; charset=utf-8',
@@ -62,7 +61,6 @@ export default function request(url, options) {
       };
       newOptions.body = JSON.stringify(newOptions.body);
     } else {
-      debugger
       // newOptions.body is FormData
       newOptions.headers = {
         Accept: 'application/json',
@@ -122,9 +120,10 @@ export default function request(url, options) {
       const { dispatch } = store;
       const status = e.name;
       if (status === 401) {
-        dispatch({
-          type: 'login/logout',
-        });
+        console.log(401);
+        // dispatch({
+        //   type: 'login/logout',
+        // });
         return;
       }
       if (status === 403) {

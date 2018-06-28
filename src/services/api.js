@@ -110,7 +110,7 @@ export async function getUserInfo() {
 }
 export async function getMpInfo(payload) {
   return request('/mc/agent/mp/query/list', {
-    method: 'post',
+    method: 'POST',
     body: payload,
   });
 }
