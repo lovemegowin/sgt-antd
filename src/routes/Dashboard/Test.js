@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
 import { Row, Col, Card, Tooltip, Menu, Icon, Pagination, Steps } from 'antd';
 import { Pie, WaterWave, Gauge, TagCloud } from 'components/Charts';
@@ -7,24 +7,45 @@ const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 const Step = Steps.Step;
 
-@connect(({ test, loading }) => ({
+@connect(({test,loading}) => ({
   test,
-  loading: loading.effects['chart/fetch'],
+  loading:loading.effects['test/getMpInfoList'],
 }))
-export default class Test extends PureComponent {
+export default class Test extends Component {
   state = {
     current: 'mail',
   };
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'test/getMpInfoList',
+      payload: {
+        page:{
+          pageNum:1,
+          pageSize:10
+        },
+        industryTypeId:"",
+        merName:"",
+        openFlag:""}
+    });
+    console.log('123')
+  }
 
   handleClick = e => {
-    console.log('click ', e);
-    this.setState({
-      current: e.key,
+    this.props.dispatch({
+      type: 'test/getMpInfoList',
+      payload: {
+        page:{
+          pageNum:1,
+          pageSize:10
+        },
+        industryTypeId:"",
+        merName:"",
+        openFlag:""}
     });
   };
 
   render() {
+    const {test,loading} = this.props
     return (
       <Fragment>
         <div>

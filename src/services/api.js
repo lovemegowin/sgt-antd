@@ -108,3 +108,9 @@ export async function getUserInfo() {
     body: '',
   });
 }
+export async function getMpInfo(payload) {
+  return request('/mc/agent/mp/query/list', {
+    method: 'post',
+    body: payload,
+  });
+}

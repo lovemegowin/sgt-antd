@@ -31,7 +31,7 @@ export default {
         yield put(routerRedux.push('/'));
       }
     },
-    *logout(_, { put, select }) {
+    *logout(_, { put, select }){
       try {
         // get location pathname
         const urlParams = new URL(window.location.href);
@@ -52,6 +52,7 @@ export default {
       }
     },
     *loginNew({ payload }, { call, put }) {
+
       const delay = timeout => {
         return new Promise(resolve => {
           setTimeout(resolve, timeout);
@@ -92,8 +93,8 @@ export default {
     *choseMerchant({ payload }, { call, put }) {
       setAuthority('Bearer ' + payload);
       yield call(loginNotify);
-      localStorage.menu = yield call(getMenu);
-      localStorage.userInfo = yield call(getUserInfo);
+      localStorage.menu = JSON.stringify(yield call(getMenu));
+      localStorage.userInfo = JSON.stringify(yield call(getUserInfo));
       // Login successfully
       yield put(routerRedux.push('/dashboard/test'));
     },

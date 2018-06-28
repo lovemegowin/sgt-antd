@@ -28,7 +28,7 @@ export default class LoginPage extends Component {
   checkScanStatusFuc = () => {
     this.props.dispatch({
       type: 'login/loginNew',
-    });
+    })
   };
 
   choseMerchant = token => {
@@ -50,8 +50,6 @@ export default class LoginPage extends Component {
 
   render() {
     const { login, loading } = this.props;
-    console.log(this.props);
-    console.log(this.state);
     const { type ,showMask} = this.state;
     const MaskLayer = () => (
       <div className="mask">
