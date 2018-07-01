@@ -1,11 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
-import {Row, Col, Card, Tooltip, Menu, Icon, Pagination, Steps, Button, Table} from 'antd';
+import { Button, Table} from 'antd';
 import { Pie, WaterWave, Gauge, TagCloud } from 'components/Charts';
-
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
-const Step = Steps.Step;
+import { Link } from 'dva/router';
+const {Column}=Table;
 
 @connect(({test,loading}) => ({
   test,
@@ -14,17 +12,22 @@ const Step = Steps.Step;
 export default class Test extends Component {
   state = {
     selectedRowKeys: [], // Check here to configure the default column
-    loading: false,
+    loading: true,
+  };
+  params = {
+    page:{
+      pageNum:1,
+      pageSize:10
+    },
+    industryTypeId:"",
+    merName:"",
+    openFlag:""
   };
   start = () => {
-    this.setState({ loading: true });
-    // ajax request after empty completing
-    setTimeout(() => {
-      this.setState({
-        selectedRowKeys: [],
-        loading: false,
-      });
-    }, 1000);
+    this.props.dispatch({
+      type: 'test/getMpInfoList',
+      payload: this.params
+    });
   };
   onSelectChange = (selectedRowKeys) => {
     console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -33,14 +36,7 @@ export default class Test extends Component {
   componentDidMount() {
     this.props.dispatch({
       type: 'test/getMpInfoList',
-      payload: {
-        page:{
-          pageNum:1,
-          pageSize:10
-        },
-        industryTypeId:"",
-        merName:"",
-        openFlag:""}
+      payload: this.params
     });
   }
 
@@ -59,7 +55,6 @@ export default class Test extends Component {
   };
 
   render() {
-    console.log(this.props);
     const {test,loading} = this.props;
     const {  selectedRowKeys } = this.state;
     const rowSelection = {
@@ -94,7 +89,15 @@ export default class Test extends Component {
             {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
           </span>
           </div>
-          <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+          <Table rowSelection={rowSelection}  dataSource={data} rowKey={record => record.mcMpUserId}>
+            <Column title="RealName" dataIndex="realName"
+              render={(text,record)=>(
+                <Link to={`/dashboard/market-detail/${record.mcMpUserId}`}>{text}</Link>
+              )}
+            />
+            <Column title="ShopFullName" dataIndex="shopFullName" />
+            <Column title="Address" dataIndex="shopAddress"/>
+          </Table>
         </div>
       </Fragment>
     );

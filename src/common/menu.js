@@ -21,10 +21,8 @@ const menuData = [
         // hideInMenu: true,
       },
       {
-        name: '测试页',
+        name: '商户列表',
         path: 'test',
-        // hideInBreadcrumb: true,
-        // hideInMenu: true,
       },
     ],
   },

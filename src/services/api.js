@@ -114,3 +114,9 @@ export async function getMpInfo(payload) {
     body: payload,
   });
 }
+export async function getMpDetail(payload) {
+  return request('/mc/agent/mp/query', {
+    method: 'POST',
+    body: payload,
+  });
+}
