@@ -80,7 +80,7 @@ export async function queryNotices() {
 }
 
 export async function getAuth() {
-  return request('/mer/mp/open/getAppUrl', {
+  return request('/mp/open/getAppUrl', {
     method: 'POST',
   });
 }

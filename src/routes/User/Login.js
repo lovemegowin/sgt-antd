@@ -13,7 +13,6 @@ const { Meta } = Card;
   loading: loading.effects['login/loginNew'],
 }))
 export default class LoginPage extends Component {
-
   state = {
     type: 'account',
     autoLogin: true,
@@ -28,7 +27,7 @@ export default class LoginPage extends Component {
   checkScanStatusFuc = () => {
     this.props.dispatch({
       type: 'login/loginNew',
-    })
+    });
   };
 
   choseMerchant = token => {
@@ -50,7 +49,7 @@ export default class LoginPage extends Component {
 
   render() {
     const { login, loading } = this.props;
-    const { type ,showMask} = this.state;
+    const { type, showMask } = this.state;
     const MaskLayer = () => (
       <div className="mask">
         <a onClick={() => this.checkScanStatusFuc(login.qrCodeTicket)}>刷新</a>

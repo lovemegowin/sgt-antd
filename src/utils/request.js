@@ -56,7 +56,7 @@ export default function request(url, options) {
         Accept: 'application/json',
         'Content-Type': 'application/json; charset=utf-8',
         Authorization: auth,
-        channelId: 8,
+        channelId: 15,
         ...newOptions.headers,
       };
       newOptions.body = JSON.stringify(newOptions.body);
@@ -65,7 +65,7 @@ export default function request(url, options) {
       newOptions.headers = {
         Accept: 'application/json',
         Authorization: auth,
-        channelId: 8,
+        channelId: 15,
         ...newOptions.headers,
       };
     }
@@ -73,7 +73,7 @@ export default function request(url, options) {
     newOptions.headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json; charset=utf-8',
-      channelId: 8,
+      channelId: 15,
       Authorization: auth,
       ...newOptions.headers,
     };

@@ -90,7 +90,9 @@ export const getRouterData = app => {
       component: dynamicWrapper(app, ['test'], () => import('../routes/Dashboard/Test')),
     },
     '/dashboard/market-detail/:id': {
-      component: dynamicWrapper(app, ['marketDetail'], () => import('../routes/Dashboard/MarketDetail')),
+      component: dynamicWrapper(app, ['marketDetail'], () =>
+        import('../routes/Dashboard/MarketDetail')
+      ),
     },
     '/form/basic-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/BasicForm')),

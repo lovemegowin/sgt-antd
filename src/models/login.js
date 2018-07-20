@@ -15,7 +15,7 @@ export default {
 
   state: {
     status: undefined,
-    showMask:false
+    showMask: false,
   },
 
   effects: {
@@ -31,7 +31,7 @@ export default {
         yield put(routerRedux.push('/'));
       }
     },
-    *logout(_, { put, select }){
+    *logout(_, { put, select }) {
       try {
         // get location pathname
         const urlParams = new URL(window.location.href);
@@ -52,7 +52,6 @@ export default {
       }
     },
     *loginNew({ payload }, { call, put }) {
-
       const delay = timeout => {
         return new Promise(resolve => {
           setTimeout(resolve, timeout);
@@ -83,7 +82,7 @@ export default {
           if (responseScan.code !== '0') {
             yield put({
               type: 'scanError',
-              payload: {showMask:true},
+              payload: { showMask: true },
             });
           }
           return (tag = false);
@@ -111,7 +110,7 @@ export default {
     },
     getQrImg(state, { payload }) {
       payload.qrImg = `https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${payload.qrCodeTicket}`;
-      payload.showMask = false ;
+      payload.showMask = false;
       return {
         ...state,
         ...payload,
@@ -128,7 +127,7 @@ export default {
     scanError(state, { payload }) {
       return {
         ...state,
-        ...payload
+        ...payload,
       };
     },
   },

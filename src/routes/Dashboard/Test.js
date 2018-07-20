@@ -1,13 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
-import { Button, Table} from 'antd';
+import { Button, Card, Table, Avatar } from 'antd';
 import { Pie, WaterWave, Gauge, TagCloud } from 'components/Charts';
 import { Link } from 'dva/router';
-const {Column}=Table;
+const { Column } = Table;
 
-@connect(({test,loading}) => ({
+@connect(({ test, loading }) => ({
   test,
-  loading:loading.effects['test/getMpInfoList'],
+  loading: loading.effects['test/getMpInfoList'],
 }))
 export default class Test extends Component {
   state = {
@@ -15,89 +15,103 @@ export default class Test extends Component {
     loading: true,
   };
   params = {
-    page:{
-      pageNum:1,
-      pageSize:10
+    page: {
+      pageNum: 1,
+      pageSize: 10,
     },
-    industryTypeId:"",
-    merName:"",
-    openFlag:""
+    industryTypeId: '',
+    merName: '',
+    openFlag: '',
   };
-  start = () => {
+  getMpInfoList = () => {
     this.props.dispatch({
       type: 'test/getMpInfoList',
-      payload: this.params
+      payload: this.params,
     });
   };
-  onSelectChange = (selectedRowKeys) => {
+  start = () => {
+    this.getMpInfoList();
+  };
+  onSelectChange = selectedRowKeys => {
     console.log('selectedRowKeys changed: ', selectedRowKeys);
     this.setState({ selectedRowKeys });
   };
   componentDidMount() {
-    this.props.dispatch({
-      type: 'test/getMpInfoList',
-      payload: this.params
-    });
+    this.getMpInfoList();
   }
 
   handleClick = e => {
-    this.props.dispatch({
-      type: 'test/getMpInfoList',
-      payload: {
-        page:{
-          pageNum:1,
-          pageSize:10
-        },
-        industryTypeId:"",
-        merName:"",
-        openFlag:""}
-    });
+    this.getMpInfoList();
+  };
+  onPageChange = pageNum => {
+    this.params.page.pageNum = pageNum;
+    this.getMpInfoList();
   };
 
   render() {
-    const {test,loading} = this.props;
-    const {  selectedRowKeys } = this.state;
+    const { test, loading } = this.props;
+    const { selectedRowKeys } = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
     };
     const hasSelected = selectedRowKeys.length > 0;
-    const columns = [{
-      title: 'RealName',
-      dataIndex: 'realName',
-    }, {
-      title: 'ShopFullName',
-      dataIndex: 'shopFullName',
-    }, {
-      title: 'Address',
-      dataIndex: 'shopAddress',
-    }];
+    const columns = [
+      {
+        title: 'RealName',
+        dataIndex: 'realName',
+      },
+      {
+        title: 'ShopFullName',
+        dataIndex: 'shopFullName',
+      },
+      {
+        title: 'Address',
+        dataIndex: 'shopAddress',
+      },
+    ];
     const data = test.list;
+    const pagination = {
+      current: test.pageNum,
+      defaultPageSize: 10,
+      total: test.total,
+      onChange: this.onPageChange,
+    };
     return (
       <Fragment>
         <div>
           <div style={{ marginBottom: 16 }}>
-            <Button
-              type="primary"
-              onClick={this.start}
-              disabled={!hasSelected}
-              loading={loading}
-            >
+            <Button type="primary" onClick={this.handleClick} loading={loading}>
               Reload
             </Button>
             <span style={{ marginLeft: 8 }}>
-            {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
-          </span>
+              {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
+            </span>
           </div>
-          <Table rowSelection={rowSelection}  dataSource={data} rowKey={record => record.mcMpUserId}>
-            <Column title="RealName" dataIndex="realName"
-              render={(text,record)=>(
-                <Link to={`/dashboard/market-detail/${record.mcMpUserId}`}>{text}</Link>
-              )}
-            />
-            <Column title="ShopFullName" dataIndex="shopFullName" />
-            <Column title="Address" dataIndex="shopAddress"/>
-          </Table>
+          <Card>
+            <Table
+              rowSelection={rowSelection}
+              dataSource={data}
+              rowKey={record => record.mcMpUserId}
+              pagination={pagination}
+              loading={loading}
+            >
+              <Column
+                title="头像"
+                dataIndex="headImgUrl"
+                render={text => <Avatar src={`${text}@!sgt300`} />}
+              />
+              <Column
+                title="负责人"
+                dataIndex="realName"
+                render={(text, record) => (
+                  <Link to={`/dashboard/market-detail/${record.mcMpUserId}`}>{text}</Link>
+                )}
+              />
+              <Column title="店铺名称" dataIndex="shopFullName" />
+              <Column title="店铺地址" dataIndex="shopAddress" />
+            </Table>
+          </Card>
         </div>
       </Fragment>
     );
